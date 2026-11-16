@@ -1,39 +1,46 @@
 ---
 name: context-to-html
-description: Create a polished, self-contained HTML visual from supplied content or the relevant conversation context. Use for HTML visualizations, visual summaries, infographics, concept pages, explainers, timelines, comparisons, process maps, and presentation-like one-page artifacts; not for full multi-file web applications or production websites.
+description: Create distinctive, self-contained HTML explainers, visual summaries, infographics, timelines, comparisons, and process maps from supplied content or conversation context. Use for one-page visual artifacts, not full applications or production websites.
 ---
 
 # Context to HTML
 
-Turn the user's source material into an actual `.html` artifact that communicates the ideas more clearly than prose alone. Treat this as information design and editorial composition, not as a generic dashboard template.
+Turn the source into an actual `.html` artifact with a clear editorial point of view and a visual form specific to its subject. A nicely styled transcript or a grid of summary cards is not enough when the material contains relationships worth showing.
 
-Before designing or writing the file, read [references/visual-standard.md](references/visual-standard.md).
+Before designing, read [references/visual-standard.md](references/visual-standard.md). It contains art-direction choices, composition examples, and the visual acceptance checks.
 
-## Resolve the source
+## Ground the content
 
-- When the user points to specific content, use that content.
-- When they say "this conversation", "the idea above", or similar, extract the relevant substance from the preceding conversation. Exclude coordination chatter, tool logs, and unrelated turns.
-- Preserve facts, numbers, names, qualifications, and causal claims. Do not invent supporting data or silently strengthen uncertain claims.
-- Match the user's language unless they request another one.
-- Make reasonable structural and visual assumptions without pausing for preferences. Ask only when missing source material would materially change the artifact.
+- Use the specified source; for “this conversation”, extract the relevant substance and omit coordination chatter and tool logs.
+- Preserve facts, numbers, names, causality, qualifications, and open questions. Keep synthetic examples clearly labeled. Never invent evidence or turn an unknown into a negative claim.
+- Match the user's language. Honor their reference, brand, requested format, and existing design system before choosing a new direction.
+- Infer the audience and purpose when possible. Ask only when missing source material would materially change the artifact; ordinary design choices do not need approval.
 
-## Shape the story
+## Make the design decision before the code
 
-Identify the main takeaway, the intended audience if evident, and the relationships in the material. Choose a visual grammar that fits those relationships—for example, a timeline for sequence, a flow for causality, a comparison for alternatives, a system map for connected actors, or an editorial explainer for a developing idea. Do not add charts when there is no quantitative evidence.
+Form a short internal brief: **reader takeaway → content relationship → main visual → composition → type and color character**. “Clean, modern, professional” does not decide any of these.
 
-Organize the page around one clear narrative. Lead with the strongest insight, group supporting material into meaningful sections, and end with implications, decisions, next steps, or open questions when the source supports them. Remove repetition while retaining meaningful nuance.
+Consider two plausible directions briefly and choose the one that makes the source easiest to understand and remember. Do not generate multiple pages or ask the user to choose unless requested. For a small task, a sentence of internal planning is enough.
 
-## Build the artifact
+- Match visual grammar to the source: sequence, dependency, comparison, composition, quantitative pattern, or argument. Do not draw unsupported connections or charts without data.
+- For substantial material, build around one dominant explanatory visual: an annotated process, evidence chain, comparison, map, timeline, or data graphic. Integrate it into the opening composition instead of placing a generic hero above it.
+- Use a clear headline that carries the actual conclusion, or the central question when the source has no conclusion, without overstating certainty. Put supporting evidence beside the claim or part of the visual it explains.
+- Give sections different jobs and appropriate shapes. Use rows for comparable items, a table for precise comparison, connected steps for a process, and prose for nuance. Cards are useful for independent items, not as the page's universal container.
+- Scale the composition to the source. A short note can be one striking typographic composition; do not inflate it into a dashboard or invent sections to fill space.
 
-- Create a descriptively named `.html` file at the user's requested location, or in the current workspace when none is specified. Deliver the file, not merely a code block.
-- Put all HTML, CSS, JavaScript, and SVG in that one file. By default, use no build step, CDN, external font, remote image, or runtime dependency. Links cited by the source may remain ordinary links.
-- Prefer semantic HTML, CSS Grid/Flexbox, CSS custom properties, and inline SVG for diagrams or small data graphics. Properly escape source text that contains HTML-significant characters.
-- Make the page responsive, readable, and useful at both desktop and narrow widths. Include print-friendly behavior when it helps the artifact's likely use.
-- Use interaction only when it improves comprehension. Any controls must work with pointer and keyboard input; essential information must remain available without JavaScript.
-- Respect `prefers-reduced-motion`, maintain visible focus states and adequate contrast, and avoid conveying meaning with color alone.
+## Build one portable file
 
-## Verify and hand off
+- Create a descriptively named `.html` in the requested location, or the current workspace. Deliver the file, not only code.
+- Inline HTML, CSS, JavaScript, and SVG. Default to no build step, CDN, external font, remote asset, or runtime dependency. Use installed fonts with fallbacks; embed supplied local assets when useful. Source links can remain ordinary links.
+- Prefer semantic HTML, CSS Grid/Flexbox, custom properties, and inline SVG. Keep essential content available without JavaScript and when opened directly from disk.
+- Recompose at narrow widths; do not merely shrink a desktop diagram. Keep labels readable, connectors meaningful, controls keyboard usable, and focus visible. Respect reduced motion and use more than color to convey meaning.
+- Escape HTML-significant source text. In interactive features, insert untrusted text with `textContent`, not `innerHTML`.
+- Add print styles when the artifact is likely to be saved or shared as a document. Reveal essential expandable content for printing.
 
-Open and inspect the rendered file when browser tooling is available. Check at desktop and narrow widths, correct console errors, overflow, clipped labels, broken controls, unreadable contrast, and layout collisions. Otherwise inspect the document for complete structure, inline dependencies, and obvious markup or CSS errors.
+## Inspect and revise
 
-Return a clickable link to the HTML file and a concise description of the chosen visual approach. Mention assumptions only when they affect meaning.
+When browser tooling is available, open the actual file and inspect desktop and narrow screenshots (for example, 1440 × 900 and 390 × 844), plus the full page and an intermediate width where the layout changes. Check overflow, label collisions, console errors, controls, keyboard focus, and offline dependencies. Otherwise do a structural check and disclose that the render was not verified.
+
+Apply the visual acceptance checks in the reference. If source material with a different underlying relationship could replace the content by changing only text and accent color, revise the composition or main visual. More shadows, gradients, or animation do not fix that failure. Recheck after the revision.
+
+Return a clickable HTML link and one sentence describing the visual approach. Mention material assumptions and any unverified behavior concisely. Do not narrate the internal design deliberation.
