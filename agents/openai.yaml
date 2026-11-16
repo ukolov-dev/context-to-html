@@ -1,4 +1,4 @@
 interface:
   display_name: "Context to HTML"
-  short_description: "Turn context into polished HTML visuals"
-  default_prompt: "Use $context-to-html to turn this conversation into a polished, self-contained HTML visualization."
+  short_description: "Turn context into distinctive HTML explainers"
+  default_prompt: "Use $context-to-html to turn this content into a distinctive, self-contained HTML explainer with a visual form chosen for its subject."
